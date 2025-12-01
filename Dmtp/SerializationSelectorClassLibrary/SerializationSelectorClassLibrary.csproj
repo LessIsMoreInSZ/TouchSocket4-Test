@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MemoryPack" />
+    <PackageReference Include="TouchSocket.JsonRpc" />
+    <PackageReference Include="TouchSocket.Rpc" />
+    <PackageReference Include="TouchSocket.WebApi" />
+    <PackageReference Include="TouchSocket.XmlRpc" />
+    <PackageReference Include="TouchSocketPro" />
+    <PackageReference Include="TouchSocketPro.Dmtp" />
+  </ItemGroup>
+
+</Project>

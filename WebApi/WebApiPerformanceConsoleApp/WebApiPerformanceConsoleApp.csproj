@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>net9.0;net9.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<ServerGarbageCollection>true</ServerGarbageCollection>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FastEndpoints" />
+		<PackageReference Include="Newtonsoft.Json" />
+		<PackageReference Include="TouchSocket.Hosting" />
+		<PackageReference Include="TouchSocket.WebApi" />
+		<PackageReference Include="TouchSocket.WebApi.Swagger" />
+	</ItemGroup>
+</Project>

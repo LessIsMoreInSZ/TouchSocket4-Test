@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Include="..\DmtpRpcServerConsoleApp\RpcProxy.cs" Link="RpcProxy.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="TouchSocket.Dmtp" />
+		<PackageReference Include="MemoryPack" />
+	</ItemGroup>
+</Project>
