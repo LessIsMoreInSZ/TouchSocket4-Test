@@ -26,8 +26,8 @@ internal class Program
                                                         //.SetListenIPHosts("tcp://127.0.0.1:7789", 7790)//同时监听两个地址
                                                         //.SetListenIPHosts("tcp://172.27.229.102:5019", 5012)//同时监听两个地址
                                                         //.SetListenIPHosts("127.0.0.1:5012")//同时监听两个地址
-              .SetListenIPHosts(new IPHost("127.0.0.1:5019"))
-
+                                                        //.SetListenIPHosts(new IPHost("127.0.0.1:5019"))
+              .SetListenIPHosts(new IPHost("0.0.0.0:5019"))
              //.SetListenIPHosts("tcp://8.130.37.131:5019", 5020)//同时监听两个地址
              //.SetListenIPHosts("tcp://0.0.0.0:5019", 5020)//同时监听两个地址
 
