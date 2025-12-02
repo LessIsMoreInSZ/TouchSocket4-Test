@@ -10,6 +10,8 @@
 //  感谢您的下载和使用
 //------------------------------------------------------------------------------
 
+using System.Buffers;
+using System.Text;
 using TouchSocket.Core;
 using TouchSocket.Sockets;
 
@@ -21,7 +23,9 @@ internal class Program
     {
         var service = new TcpService();
         await service.SetupAsync(new TouchSocketConfig()//载入配置
-             .SetListenIPHosts("tcp://127.0.0.1:7789", 7790)//同时监听两个地址
+                      //.SetListenIPHosts("tcp://127.0.0.1:7789", 7790)//同时监听两个地址
+                      .SetListenIPHosts("tcp://127.0.0.1:5019", 5020)//同时监听两个地址
+
              .ConfigureContainer(a =>//容器的配置顺序应该在最前面
              {
                  a.AddConsoleLogger();//添加一个控制台日志注入（注意：在maui中控制台日志不可用）
@@ -62,6 +66,8 @@ internal class TcpServiceReceiveAsyncPlugin : PluginBase, ITcpConnectedPlugin
                     {
                         //收到的数据，此处的数据会根据适配器投递不同的数据。
                         var memory = receiverResult.Memory;
+                        Console.WriteLine(StringConverter.ConvertToString(memory));
+                      
                         var requestInfo = receiverResult.RequestInfo;
 
                         if (receiverResult.IsCompleted)
@@ -76,5 +82,41 @@ internal class TcpServiceReceiveAsyncPlugin : PluginBase, ITcpConnectedPlugin
         }
 
         await e.InvokeNext();
+    }
+}
+
+public static class StringConverter
+{
+    // 缓存编码器以提高性能
+    private static readonly Encoding UTF8 = Encoding.UTF8;
+    private static readonly Encoding ASCII = Encoding.ASCII;
+
+    public static string ConvertToString(
+        ReadOnlyMemory<byte> memory,
+        Encoding encoding = null,
+        bool poolBuffer = false)
+    {
+        encoding ??= UTF8;
+
+        // 对于大内存，使用 ArrayPool 优化
+        int charCount = encoding.GetCharCount(memory.Span);
+
+        if (poolBuffer && charCount > 1024)
+        {
+            char[] buffer = ArrayPool<char>.Shared.Rent(charCount);
+            try
+            {
+                int actualChars = encoding.GetChars(memory.Span, buffer);
+                return new string(buffer, 0, actualChars);
+            }
+            finally
+            {
+                ArrayPool<char>.Shared.Return(buffer);
+            }
+        }
+        else
+        {
+            return encoding.GetString(memory.Span);
+        }
     }
 }
