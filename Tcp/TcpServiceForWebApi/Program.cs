@@ -27,5 +27,6 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
+                webBuilder.UseUrls("https://localhost:5019"); // Bind published host to the requested HTTPS endpoint
             });
 }

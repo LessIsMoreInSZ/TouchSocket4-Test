@@ -109,7 +109,11 @@ internal class Program
         #region 创建MyService服务器
         var service = new MyService();
         service.Connecting = (client, e) => { return EasyTask.CompletedTask; };//有客户端正在连接
-        service.Connected = (client, e) => { return EasyTask.CompletedTask; };//有客户端成功连接
+        service.Connected = (client, e) =>
+        {
+            Console.WriteLine($"客户端 {client.GetIPPort()} 已连接，Id={client.Id}");
+            return EasyTask.CompletedTask;
+        };//有客户端成功连接
         service.Closing = (client, e) => { return EasyTask.CompletedTask; };//有客户端正在断开连接，只有当主动断开时才有效。
         service.Closed = (client, e) => { return EasyTask.CompletedTask; };//有客户端断开连接
 
@@ -679,11 +683,13 @@ internal class TcpServiceReceivedPlugin : PluginBase, ITcpReceivedPlugin
             throw new CloseException(mes);
         }
         client.Logger.Info($"已从{client.GetIPPort()}接收到信息：{mes}");
+        Console.WriteLine($"收到来自 {client.GetIPPort()} 的消息: {mes}");
 
         if (client is ITcpSessionClient sessionClient)
         {
             //将收到的信息直接返回给发送方
             await sessionClient.SendAsync(mes);
+            Console.WriteLine($"已向 {client.GetIPPort()} 发送消息: {mes}");
         }
 
         await e.InvokeNext();

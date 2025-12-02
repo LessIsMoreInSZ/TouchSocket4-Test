@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using TcpServiceForWebApi.Plugins;
+using TcpServiceForWebApi.Services;
 using TouchSocket.Core;
 using TouchSocket.Sockets;
 
@@ -48,6 +49,8 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "TcpServiceForWebApi", Version = "v1" });
         });
+
+        services.AddHostedService<TcpClientPoolHostedService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
